@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Header from "./Header";
 import { main } from "../styles/MainStyles";
 import useFetch from "../hooks/useFetch";
+import CardContainer from "./CardContainer";
 
 function Main() {
   const [searchedWord, setSearchedWord] = useState("");
@@ -28,23 +29,21 @@ function Main() {
     let filterMovies = movies.filter((movie) =>
       movie.original_title.toLowerCase().includes(word.toLowerCase())
     );
-    
+
     setMoviesCopy(filterMovies);
   };
 
   if (loading) return <h1>loading</h1>;
   if (error) return <h1>error</h1>;
 
+  const clickedMovie=(clickedMovie)=>{
+    console.log("hola",clickedMovie);
+  }
+
   return (
     <main>
       <Header searchedWord={captureSearchedWord} />
-      {moviesCopy && (
-        <ol>
-          {moviesCopy.map((movie) => (
-            <li key={movie.id}>{movie.original_title}</li>
-          ))}
-        </ol>
-      )}
+      {moviesCopy && <CardContainer movies={moviesCopy} clickedMovie={clickedMovie} />}
     </main>
   );
 }
